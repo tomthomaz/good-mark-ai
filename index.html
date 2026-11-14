@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GOOD MARK AI</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#080D18;color:white;font-family:Arial,sans-serif}
+header{padding:20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #20334D}
+.logo{color:#55A9FF;font-size:21px;font-weight:bold}
+button{cursor:pointer;border:0}
+#home,#chat{padding:20px}
+.welcome{margin:35px 0}
+.welcome h1{font-size:28px;margin-bottom:12px}
+.muted{color:#9AAAC0}
+.ai-card{background:linear-gradient(135deg,#123D70,#101A2C);padding:30px 15px;border-radius:22px;text-align:center;margin:25px 0}
+.robot{font-size:55px;margin-bottom:15px}
+.ai-card h2{color:#65B5FF}
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+.tool{background:#111D30;border:1px solid #233B58;padding:25px 10px;border-radius:15px;text-align:center;color:white}
+.tool span{font-size:28px}
+.tool p{margin-top:12px}
+#chat{display:none}
+.chat-title{display:flex;align-items:center;gap:12px;margin:10px 0 20px}
+.back{background:#172941;color:#60B5FF;padding:12px;border-radius:10px}
+#messages{height:58vh;overflow-y:auto;padding:8px 0}
+.msg{padding:13px 15px;margin:12px 0;border-radius:16px;max-width:85%;line-height:1.5;overflow-wrap:anywhere}
+.user{background:#174D80;margin-left:auto}
+.bot{background:#14243A;border:1px solid #29415F;margin-right:auto}
+.sender{font-size:11px;color:#8EBFFF;margin-bottom:5px}
+.input-area{display:flex;gap:8px;position:sticky;bottom:0;background:#080D18;padding:12px 0}
+#question{flex:1;min-width:0;background:#14243A;color:white;border:1px solid #355579;border-radius:25px;padding:14px;font-size:15px;outline:none}
+#send{background:#1685E8;color:white;border-radius:50%;width:48px;height:48px;font-size:20px}
+footer{text-align:center;color:#65758A;padding:20px;font-size:12px}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="logo">GOOD MARK AI</div>
+ <div>🤖</div>
+</header>
+
+<div id="home">
+ <div class="welcome">
+  <h1>Hello, Welcome!</h1>
+  <p class="muted">Your intelligent personal assistant.</p>
+ </div>
+
+ <div class="ai-card">
+  <div class="robot">🤖</div>
+  <h2>GOOD MARK AI</h2>
+  <p style="margin-top:12px">How can I help you today?</p>
+  <button onclick="openChat()" style="margin-top:20px;background:#1685E8;color:white;padding:13px 25px;border-radius:25px">
+  Start Chat →
+  </button>
+ </div>
+
+ <h3>Explore AI Tools</h3>
+ <div class="tools">
+  <button class="tool" onclick="openChat()"><span>💬</span><p>AI Chat</p></button>
+  <button class="tool" onclick="openChat()"><span>🎙️</span><p>Voice AI</p></button>
+  <button class="tool" onclick="openChat()"><span>📚</span><p>Study Assistant</p></button>
+  <button class="tool" onclick="openChat()"><span>💡</span><p>Idea Generator</p></button>
+ </div>
+</div>
+
+<div id="chat">
+ <div class="chat-title">
+  <button class="back" onclick="goHome()">← Back</button>
+  <div>
+   <b>GOOD MARK AI</b>
+   <p class="muted" style="font-size:12px">Demo Assistant</p>
+  </div>
+ </div>
+
+ <div id="messages">
+  <div class="msg bot">
+   <div class="sender">GOOD MARK AI</div>
+   Hello! 👋 നമസ്കാരം!<br>
+   How can I help you today?
+  </div>
+ </div>
+
+ <div class="input-area">
+  <input id="question" placeholder="Type your message..." 
+  onkeydown="if(event.key==='Enter')sendMessage()">
+  <button id="send" onclick="sendMessage()">➤</button>
+ </div>
+</div>
+
+<footer>POWERED BY GOOD MARK AI · VERSION 1.0</footer>
+
+<script>
+function openChat(){
+ document.getElementById("home").style.display="none";
+ document.getElementById("chat").style.display="block";
+ document.getElementById("question").focus();
+}
+function goHome(){
+ document.getElementById("chat").style.display="none";
+ document.getElementById("home").style.display="block";
+}
+function addMessage(text,type){
+ const box=document.getElementById("messages");
+ const msg=document.createElement("div");
+ msg.className="msg "+type;
+ const sender=document.createElement("div");
+ sender.className="sender";
+ sender.textContent=type==="user"?"YOU":"GOOD MARK AI";
+ const content=document.createElement("div");
+ content.textContent=text;
+ msg.appendChild(sender);
+ msg.appendChild(content);
+ box.appendChild(msg);
+ box.scrollTop=box.scrollHeight;
+}
+function sendMessage(){
+ const input=document.getElementById("question");
+ const text=input.value.trim();
+ if(!text)return;
+ addMessage(text,"user");
+ input.value="";
+
+ let reply="നിന്റെ സന്ദേശം ലഭിച്ചു! 😊 ഇപ്പോൾ ഞാൻ Demo Mode-ലാണ്. യഥാർത്ഥ AI മറുപടികൾക്കായി AI API കണക്ട് ചെയ്യണം.";
+
+ if(/hello|hi|hey/i.test(text)){
+  reply="Hello! 👋 Welcome to GOOD MARK AI. How can I help you?";
+ }else if(/നമസ്കാരം|ഹായ്|ഹലോ/.test(text)){
+  reply="നമസ്കാരം! 😊 GOOD MARK AI-ലേക്ക് സ്വാഗതം. എന്താണ് അറിയേണ്ടത്?";
+ }else if(/who are you|നീ ആരാണ്/i.test(text)){
+  reply="ഞാൻ GOOD MARK AI ആണ്. നിങ്ങളുടെ Personal AI Assistant ആകാൻ ഒരുങ്ങുകയാണ്! 🤖";
+ }else if(/thank/i.test(text)){
+  reply="You're welcome! 😊";
+ }
+
+ setTimeout(()=>addMessage(reply,"bot"),400);
+}
+</script>
+</body>
+</html>
